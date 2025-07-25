@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVY Studios - Web Previews for Brands</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-purple: #4A148C;
+            --secondary-purple: #6A1B9A;
+            --light-purple: #9C27B0;
+            --gradient: linear-gradient(135deg, #4A148C, #6A1B9A, #9C27B0);
+            --text-light: #ffffff;
+            --text-dark: #333333;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--gradient);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(74, 20, 140, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            color: var(--text-light);
+            font-size: 2rem;
+            font-weight: 900;
+            text-decoration: none;
+            font-family: 'Arial Black', Arial, sans-serif;
+            letter-spacing: -2px;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, #ffffff, #e1bee7, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 2px 10px rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            filter: brightness(1.2);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .auth-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .auth-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .auth-btn.signup {
+            background: var(--text-light);
+            color: var(--primary-purple);
+            border-color: var(--text-light);
+        }
+
+        .auth-btn.signup:hover {
+            background: #f0f0f0;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-light);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Page Sections */
+        .page-section {
+            display: none;
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* Home Section */
+        .hero {
+            background: var(--gradient);
+            color: var(--text-light);
+            padding: 6rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: slideInUp 1s ease-out;
+        }
+
+        .hero .tagline {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: slideInUp 1s ease-out 0.2s both;
+        }
+
+        .hero .subtitle {
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            animation: slideInUp 1s ease-out 0.4s both;
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: slideInUp 1s ease-out 0.6s both;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--text-light);
+            color: var(--primary-purple);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-light);
+            border: 2px solid var(--text-light);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 0;
+            background: var(--bg-light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--primary-purple);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(74, 20, 140, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(74, 20, 140, 0.2);
+            border-color: var(--light-purple);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-purple);
+        }
+
+        .feature-btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            margin-top: 1rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .buy-btn {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(74, 20, 140, 0.3);
+        }
+
+        .buy-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(74, 20, 140, 0.4);
+        }
+
+        .enquiry-btn {
+            background: transparent;
+            color: var(--primary-purple);
+            border: 2px solid var(--primary-purple);
+        }
+
+        .enquiry-btn:hover {
+            background: var(--primary-purple);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(74, 20, 140, 0.3);
+        }
+
+        /* Services Page */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(74, 20, 140, 0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--light-purple);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(74, 20, 140, 0.15);
+        }
+
+        .service-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--primary-purple);
+        }
+
+        .service-price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--light-purple);
+            margin: 1rem 0;
+        }
+
+        /* Catalogue Page */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .portfolio-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(74, 20, 140, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(74, 20, 140, 0.2);
+        }
+
+        .portfolio-image {
+            height: 200px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .portfolio-content {
+            padding: 1.5rem;
+        }
+
+        .portfolio-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-purple);
+        }
+
+        /* About Page */
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(74, 20, 140, 0.1);
+            margin-top: 3rem;
+        }
+
+        .about-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--primary-purple);
+            text-align: center;
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(156, 39, 176, 0.1) 0%, rgba(156, 39, 176, 0.1) 100%);
+            padding: 0.2rem 0.5rem;
+            border-radius: 5px;
+            font-weight: 600;
+            color: var(--primary-purple);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-purple);
+            color: var(--text-light);
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .footer-logo {
+            font-size: 2.5rem;
+            font-weight: 900;
+            font-family: 'Arial Black', Arial, sans-serif;
+            letter-spacing: -2px;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, #ffffff, #e1bee7, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .footer-tagline {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .social-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .social-icon {
+            font-size: 1.2rem;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            display: block;
+            padding: 0.3rem 0;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        .contact-info p {
+            margin: 0.5rem 0;
+            opacity: 0.8;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 1rem;
+            text-align: center;
+            opacity: 0.8;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 15% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #aaa;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: var(--primary-purple);
+        }
+
+        .modal h2 {
+            color: var(--primary-purple);
+            margin-bottom: 1rem;
+        }
+
+        .modal p {
+            color: var(--text-dark);
+            font-size: 1.1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .auth-buttons {
+                gap: 0.3rem;
+            }
+
+            .auth-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            /* Hero Section Mobile */
+            .hero {
+                padding: 4rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .hero .tagline {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+                padding: 0 1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.8rem;
+            }
+
+            .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+                width: 80%;
+                max-width: 250px;
+            }
+
+            /* Features Mobile */
+            .features {
+                padding: 3rem 0;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+
+            .features-grid,
+            .services-grid,
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .feature-card {
+                padding: 1.5rem;
+                margin: 0 0.5rem;
+            }
+
+            .feature-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .feature-card h3 {
+                font-size: 1.3rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .feature-card p {
+                font-size: 0.95rem;
+                line-height: 1.5;
+                margin-bottom: 1rem;
+            }
+
+            .feature-btn {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9rem;
+                margin-top: 0.8rem;
+                width: 100%;
+                max-width: 200px;
+            }
+
+            /* Services Mobile */
+            .service-card {
+                padding: 1.8rem;
+                margin: 0 0.5rem;
+            }
+
+            .service-card h3 {
+                font-size: 1.5rem;
+            }
+
+            .service-price {
+                font-size: 1.6rem;
+            }
+
+            .service-card ul {
+                font-size: 0.9rem;
+            }
+
+            /* Portfolio Mobile */
+            .portfolio-item {
+                margin: 0 0.5rem;
+            }
+
+            .portfolio-image {
+                height: 150px;
+                font-size: 1rem;
+            }
+
+            .portfolio-content {
+                padding: 1.2rem;
+            }
+
+            .portfolio-content h3 {
+                font-size: 1.2rem;
+            }
+
+            /* About Mobile */
+            .about-content {
+                padding: 2rem 1.5rem;
+                margin: 2rem 0.5rem;
+            }
+
+            .about-content h2 {
+                font-size: 2rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .about-content p {
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+
+            /* Footer Mobile */
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 1.5rem;
+                padding: 0 1rem;
+            }
+
+            .footer-logo {
+                font-size: 2rem;
+            }
+
+            .social-links {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 0.8rem;
+            }
+
+            .social-link {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+
+            .contact-info p {
+                font-size: 0.9rem;
+            }
+
+            .footer-bottom {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+
+            /* Modal Mobile */
+            .modal-content {
+                margin: 20% auto;
+                padding: 1.5rem;
+                width: 95%;
+                max-width: 350px;
+            }
+
+            .modal h2 {
+                font-size: 1.5rem;
+            }
+
+            .modal p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo" onclick="showPage('home')">AVY STUDIOS</a>
+            <ul class="nav-links">
+                <li><a href="#" class="nav-link active" onclick="showPage('home')">Home</a></li>
+                <li><a href="#" class="nav-link" onclick="showPage('services')">Services</a></li>
+                <li><a href="#" class="nav-link" onclick="showPage('catalogue')">Catalogue</a></li>
+                <li><a href="#" class="nav-link" onclick="showPage('about')">About</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="#" class="auth-btn login" onclick="showModal()">Login</a>
+                <a href="#" class="auth-btn signup" onclick="showModal()">Sign Up</a>
+            </div>
+            <div class="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <section id="home" class="page-section active">
+        <div class="hero">
+            <div class="hero-content">
+                <h1>AVY STUDIOS</h1>
+                <p class="tagline">Web Previews for Brands</p>
+                <p class="subtitle">We're a creative digital service hub helping brands bring their online presence to life. Preview your dream website before spending a dime.</p>
+                <div class="cta-buttons">
+                    <a href="#" class="btn btn-primary" onclick="showPage('services')">Get Started</a>
+                    <a href="#" class="btn btn-secondary" onclick="showPage('catalogue')">View Portfolio</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="features">
+            <div class="container">
+                <h2 class="section-title">What We Offer</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🌐</div>
+                        <h3>Free Website Previews</h3>
+                        <p>See your dream site before spending a dime. We create stunning previews tailored to your vision.</p>
+                        <a href="https://chat.whatsapp.com/IJmqFUnN43pJeR8am4cOs5?mode=ac_t" target="_blank" class="feature-btn enquiry-btn">Make Enquiry</a>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>Foreign Phone Numbers</h3>
+                        <p>Get reliable USA & UK phone numbers to unlock global opportunities for your business.</p>
+                        <a href="https://chat.whatsapp.com/IJmqFUnN43pJeR8am4cOs5?mode=ac_t" target="_blank" class="feature-btn buy-btn">Buy Now</a>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <h3>Premium VPN Services</h3>
+                        <p>Access NORD, PIA, ExpressVPN and more to secure your digital presence worldwide.</p>
+                        <a href="https://chat.whatsapp.com/IJmqFUnN43pJeR8am4cOs5?mode=ac_t" target="_blank" class="feature-btn buy-btn">Buy Now</a>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🚀</div>
+                        <h3>Modern & Responsive</h3>
+                        <p>All our websites are built with the latest technology for optimal performance across all devices.</p>
+                        <a href="https://chat.whatsapp.com/IJmqFUnN43pJeR8am4cOs5?mode=ac_t" target="_blank" class="feature-btn enquiry-btn">Make Enquiry</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Page -->
+    <section id="services" class="page-section">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>🌐 Free Website Preview</h3>
+                    <div class="service-price">FREE</div>
+                    <p>Get a complete preview of your website design before making any commitment. See exactly how your brand will look online.</p>
+                    <ul style="margin: 1rem 0; padding-left: 1.5rem;">
+                        <li>Custom design mockup</li>
+                        <li>Mobile responsive preview</li>
+                        <li>Brand color integration</li>
+                        <li>No commitment required</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <h3>📱 Foreign Phone Numbers</h3>
+                    <div class="service-price">From $15/month</div>
+                    <p>Reliable USA & UK phone numbers for Nigerian freelancers and entrepreneurs to access global markets.</p>
+                    <ul style="margin: 1rem 0; padding-left: 1.5rem;">
+                        <li>USA & UK numbers available</li>
+                        <li>SMS & call forwarding</li>
+                        <li>Business verification support</li>
+                        <li>24/7 reliability</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <h3>🔒 Premium VPN Services</h3>
+                    <div class="service-price">From $8/month</div>
+                    <p>Access premium VPN services including NORD, PIA, ExpressVPN and more for secure global connectivity.</p>
+                    <ul style="margin: 1rem 0; padding-left: 1.5rem;">
+                        <li>Multiple premium providers</li>
+                        <li>Global server access</li>
+                        <li>High-speed connections</li>
+                        <li>Multiple device support</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <h3>🚀 Full Website Development</h3>
+                    <div class="service-price">From $500</div>
+                    <p>Complete website development service from concept to launch. Modern, responsive, and optimized for your brand.</p>
+                    <ul style="margin: 1rem 0; padding-left: 1.5rem;">
+                        <li>Custom design & development</li>
+                        <li>Mobile responsive</li>
+                        <li>SEO optimized</li>
+                        <li>1 year support included</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catalogue Page -->
+    <section id="catalogue" class="page-section">
+        <div class="container">
+            <h2 class="section-title">Our Portfolio</h2>
+            <p style="text-align: center; margin-bottom: 2rem; font-size: 1.1rem;">Explore some of our recent website previews and completed projects</p>
+
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <div class="portfolio-image">E-commerce Store Preview</div>
+                    <div class="portfolio-content">
+                        <h3>Fashion Brand Website</h3>
+                        <p>Modern e-commerce design with clean aesthetics and seamless user experience.</p>
+                    </div>
+                </div>
+
+                <div class="portfolio-item">
+                    <div class="portfolio-image">Corporate Website</div>
+                    <div class="portfolio-content">
+                        <h3>Tech Startup Landing</h3>
+                        <p>Professional corporate website with innovative design and compelling call-to-actions.</p>
+                    </div>
+                </div>
+
+                <div class="portfolio-item">
+                    <div class="portfolio-image">Restaurant Website</div>
+                    <div class="portfolio-content">
+                        <h3>Restaurant Chain Site</h3>
+                        <p>Appetizing design with online ordering system and location finder functionality.</p>
+                    </div>
+                </div>
+
+                <div class="portfolio-item">
+                    <div class="portfolio-image">Portfolio Website</div>
+                    <div class="portfolio-content">
+                        <h3>Creative Agency Portfolio</h3>
+                        <p>Stunning visual portfolio showcasing creative work with smooth animations.</p>
+                    </div>
+                </div>
+
+                <div class="portfolio-item">
+                    <div class="portfolio-image">Educational Platform</div>
+                    <div class="portfolio-content">
+                        <h3>Online Learning Platform</h3>
+                        <p>User-friendly educational website with course management and progress tracking.</p>
+                    </div>
+                </div>
+
+                <div class="portfolio-item">
+                    <div class="portfolio-image">Healthcare Website</div>
+                    <div class="portfolio-content">
+                        <h3>Medical Practice Site</h3>
+                        <p>Professional healthcare website with appointment booking and patient portal.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Page -->
+    <section id="about" class="page-section">
+        <div class="container">
+            <div class="about-content">
+                <h2>About AVY Studios</h2>
+                <p>We're a creative digital service hub helping brands bring their online presence to life. At AVY Studios, we specialize in <span class="highlight">free website previews</span> — letting you see your dream site before spending a dime. We build responsive, modern websites tailored to your vision.</p>
+
+                <p>Beyond web development, we empower Nigerian freelancers and entrepreneurs with reliable <span class="highlight">foreign phone numbers (USA & UK)</span> and premium <span class="highlight">VPN services</span> like NORD, PIA, ExpressVPN, and more — unlocking access to global opportunities.</p>
+
+                <p style="text-align: center; font-size: 1.3rem; font-weight: 600; color: var(--primary-purple); margin-top: 2rem;">💡 Preview. Build. Connect. Secure.</p>
+
+                <p style="text-align: center; font-size: 1.2rem; margin-top: 1rem;">Welcome to the future of digital branding with AVY Studios.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">AVY STUDIOS</div>
+                <p class="footer-tagline">Web Previews for Brands</p>
+                <p>Empowering Nigerian entrepreneurs with digital solutions and global connectivity.</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <div class="footer-links">
+                    <a href="#" onclick="showPage('home')">Home</a>
+                    <a href="#" onclick="showPage('services')">Services</a>
+                    <a href="#" onclick="showPage('catalogue')">Portfolio</a>
+                    <a href="#" onclick="showPage('about')">About Us</a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Services</h3>
+                <div class="footer-links">
+                    <a href="#" onclick="showPage('services')">Website Previews</a>
+                    <a href="#" onclick="showPage('services')">Foreign Phone Numbers</a>
+                    <a href="#" onclick="showPage('services')">Premium VPN</a>
+                    <a href="#" onclick="showPage('services')">Web Development</a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-links">
+                    <a href="https://tiktok.com/@avystudioss" target="_blank" class="social-link">
+                        <span class="social-icon"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">
+<path fill="#212121" fill-rule="evenodd" d="M10.904,6h26.191C39.804,6,42,8.196,42,10.904v26.191 C42,39.804,39.804,42,37.096,42H10.904C8.196,42,6,39.804,6,37.096V10.904C6,8.196,8.196,6,10.904,6z" clip-rule="evenodd"></path><path fill="#ec407a" fill-rule="evenodd" d="M29.208,20.607c1.576,1.126,3.507,1.788,5.592,1.788v-4.011 c-0.395,0-0.788-0.041-1.174-0.123v3.157c-2.085,0-4.015-0.663-5.592-1.788v8.184c0,4.094-3.321,7.413-7.417,7.413 c-1.528,0-2.949-0.462-4.129-1.254c1.347,1.376,3.225,2.23,5.303,2.23c4.096,0,7.417-3.319,7.417-7.413L29.208,20.607L29.208,20.607 z M30.657,16.561c-0.805-0.879-1.334-2.016-1.449-3.273v-0.516h-1.113C28.375,14.369,29.331,15.734,30.657,16.561L30.657,16.561z M19.079,30.832c-0.45-0.59-0.693-1.311-0.692-2.053c0-1.873,1.519-3.391,3.393-3.391c0.349,0,0.696,0.053,1.029,0.159v-4.1 c-0.389-0.053-0.781-0.076-1.174-0.068v3.191c-0.333-0.106-0.68-0.159-1.03-0.159c-1.874,0-3.393,1.518-3.393,3.391 C17.213,29.127,17.972,30.274,19.079,30.832z" clip-rule="evenodd"></path><path fill="#fff" fill-rule="evenodd" d="M28.034,19.63c1.576,1.126,3.507,1.788,5.592,1.788v-3.157 c-1.164-0.248-2.194-0.856-2.969-1.701c-1.326-0.827-2.281-2.191-2.561-3.788h-2.923v16.018c-0.007,1.867-1.523,3.379-3.393,3.379 c-1.102,0-2.081-0.525-2.701-1.338c-1.107-0.558-1.866-1.705-1.866-3.029c0-1.873,1.519-3.391,3.393-3.391 c0.359,0,0.705,0.056,1.03,0.159V21.38c-4.024,0.083-7.26,3.369-7.26,7.411c0,2.018,0.806,3.847,2.114,5.183 c1.18,0.792,2.601,1.254,4.129,1.254c4.096,0,7.417-3.319,7.417-7.413L28.034,19.63L28.034,19.63z" clip-rule="evenodd"></path><path fill="#81d4fa" fill-rule="evenodd" d="M33.626,18.262v-0.854c-1.05,0.002-2.078-0.292-2.969-0.848 C31.445,17.423,32.483,18.018,33.626,18.262z M28.095,12.772c-0.027-0.153-0.047-0.306-0.061-0.461v-0.516h-4.036v16.019 c-0.006,1.867-1.523,3.379-3.393,3.379c-0.549,0-1.067-0.13-1.526-0.362c0.62,0.813,1.599,1.338,2.701,1.338 c1.87,0,3.386-1.512,3.393-3.379V12.772H28.095z M21.635,21.38v-0.909c-0.337-0.046-0.677-0.069-1.018-0.069 c-4.097,0-7.417,3.319-7.417,7.413c0,2.567,1.305,4.829,3.288,6.159c-1.308-1.336-2.114-3.165-2.114-5.183 C14.374,24.749,17.611,21.463,21.635,21.38z" clip-rule="evenodd"></path>
+</svg></span>
+                        <span>@avystudioss</span>
+                    </a>
+                </div>
+                <div class="contact-info">
+                    <p>📧 hello@avystudios.com</p>
+                    <p>📱 Available 24/7</p>
+                    <p>🇳🇬 Based in Nigeria</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2025 AVY STUDIOS. All rights reserved. | Connecting Nigeria to Global Opportunities</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal for Login/Signup -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Coming Soon!</h2>
+            <p>🚀 Stay tuned for our amazing login and signup features!</p>
+            <p>We're working hard to bring you the best experience possible.</p>
+        </div>
+    </div>
+
+    <script>
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page-section');
+            pages.forEach(page => page.classList.remove('active'));
+
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+
+            // Update navigation
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showModal() {
+            document.getElementById('authModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('authModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('authModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Add smooth scrolling and animation triggers
+        window.addEventListener('scroll', () => {
+            const cards = document.querySelectorAll('.feature-card, .service-card, .portfolio-item');
+            cards.forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                const cardVisible = 150;
+
+                if (cardTop < window.innerHeight - cardVisible) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        // Initialize cards for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.feature-card, .service-card, .portfolio-item');
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'all 0.6s ease';
+            });
+        });
+    </script>
+</body>
+</html>
