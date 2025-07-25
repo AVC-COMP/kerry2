@@ -823,9 +823,10 @@
             <a href="#" class="logo" onclick="showPage('home')">AVY STUDIOS</a>
             <ul class="nav-links">
                 <li><a href="#" class="nav-link active" onclick="showPage('home')">Home</a></li>
-                <li><a href="#" class="nav-link" onclick="showPage('services')">Services</a></li>
-                <li><a href="#" class="nav-link" onclick="showPage('catalogue')">Catalogue</a></li>
-                <li><a href="#" class="nav-link" onclick="showPage('about')">About</a></li>
+                <li><a href="products.php" class="nav-link">Products</a></li>
+                <li><a href="courses.php" class="nav-link">Courses</a></li>
+                <li><a href="cart.php" class="nav-link">Cart</a></li>
+                <li><a href="upgrade.php" class="nav-link">Upgrade</a></li>
             </ul>
             <div class="auth-buttons">
                 <a href="#" class="auth-btn login" onclick="showModal()">Login</a>
@@ -1073,9 +1074,20 @@
     <div id="authModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <h2>Coming Soon!</h2>
-            <p>🚀 Stay tuned for our amazing login and signup features!</p>
-            <p>We're working hard to bring you the best experience possible.</p>
+            <h2>Register</h2>
+            <form action="register.php" method="post">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <button type="submit">Register</button>
+            </form>
+            <hr>
+            <h2>Login</h2>
+            <form action="login.php" method="post">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
         </div>
     </div>
 
